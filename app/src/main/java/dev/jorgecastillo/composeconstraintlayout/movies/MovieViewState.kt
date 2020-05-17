@@ -1,4 +1,4 @@
-package dev.jorgecastillo.composeconstraintlayout
+package dev.jorgecastillo.composeconstraintlayout.movies
 
 data class MovieViewState(
     val headerImageUrl: String,
