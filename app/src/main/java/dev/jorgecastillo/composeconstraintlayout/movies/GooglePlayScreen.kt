@@ -5,6 +5,7 @@ import androidx.ui.core.ContentScale
 import androidx.ui.core.Modifier
 import androidx.ui.core.tag
 import androidx.ui.foundation.Text
+import androidx.ui.foundation.VerticalScroller
 import androidx.ui.foundation.drawBackground
 import androidx.ui.graphics.Color
 import androidx.ui.layout.ConstraintLayout
@@ -30,153 +31,182 @@ import dev.jorgecastillo.composeconstraintlayout.ui.RoundedTextButton
 
 @Composable
 fun GooglePlayScreen(movie: MovieViewState) {
-    ConstraintLayout(
-        modifier = Modifier.drawBackground(color = Color.White) +
-                Modifier.fillMaxWidth() +
-                Modifier.fillMaxHeight(),
-        constraintSet = ConstraintSet {
-            val headerImage = tag("headerImage")
-            val portraitImage = tag("portraitImage")
-            val title = tag("title")
-            val subtitle = tag("subtitle")
-            val buttonRent = tag("buttonRent")
-            val buttonBuy = tag("buttonBuy")
-            val buttonsDivider = tag("buttonsDivider")
-            val ratingCircle = tag("ratingCircle")
-            val familyCircle = tag("familyCircle")
-            val tomatoesCircle = tag("tomatoesCircle")
-            val similarCircle = tag("similarCircle")
+    VerticalScroller {
+        ConstraintLayout(
+            modifier = Modifier.drawBackground(color = Color.White) +
+                    Modifier.fillMaxWidth() +
+                    Modifier.fillMaxHeight(),
+            constraintSet = ConstraintSet {
+                val headerImage = tag("headerImage")
+                val portraitImage = tag("portraitImage")
+                val title = tag("title")
+                val subtitle = tag("subtitle")
+                val buttonRent = tag("buttonRent")
+                val buttonBuy = tag("buttonBuy")
+                val buttonsDivider = tag("buttonsDivider")
+                val ratingCircle = tag("ratingCircle")
+                val familyCircle = tag("familyCircle")
+                val tomatoesCircle = tag("tomatoesCircle")
+                val similarCircle = tag("similarCircle")
+                val buttonsBottomDivider = tag("buttonsBottomDivider")
+                val description = tag("description")
 
-            headerImage.top constrainTo parent.top
-            headerImage.left constrainTo parent.left
-            headerImage.right constrainTo parent.right
+                headerImage.top constrainTo parent.top
+                headerImage.left constrainTo parent.left
+                headerImage.right constrainTo parent.right
 
-            portraitImage.left constrainTo parent.left
-            portraitImage.top constrainTo headerImage.bottom
-            portraitImage.bottom constrainTo headerImage.bottom
+                portraitImage.left constrainTo parent.left
+                portraitImage.top constrainTo headerImage.bottom
+                portraitImage.bottom constrainTo headerImage.bottom
 
-            title.top constrainTo headerImage.bottom
-            title.left constrainTo portraitImage.right
-            title.right constrainTo parent.right
-            title.width = spread
+                title.top constrainTo headerImage.bottom
+                title.left constrainTo portraitImage.right
+                title.right constrainTo parent.right
+                title.width = spread
 
-            subtitle.top constrainTo title.bottom
-            subtitle.left constrainTo title.left
-            subtitle.right constrainTo parent.right
-            subtitle.width = spread
+                subtitle.top constrainTo title.bottom
+                subtitle.left constrainTo title.left
+                subtitle.right constrainTo parent.right
+                subtitle.width = spread
 
-            buttonRent.left constrainTo parent.left
-            buttonRent.top constrainTo subtitle.bottom
-            buttonRent.right constrainTo buttonBuy.left
-            buttonRent.width = spread
+                buttonRent.left constrainTo parent.left
+                buttonRent.top constrainTo subtitle.bottom
+                buttonRent.right constrainTo buttonBuy.left
+                buttonRent.width = spread
 
-            buttonBuy.left constrainTo buttonRent.right
-            buttonBuy.top constrainTo subtitle.bottom
-            buttonBuy.right constrainTo parent.right
-            buttonBuy.width = spread
+                buttonBuy.left constrainTo buttonRent.right
+                buttonBuy.top constrainTo subtitle.bottom
+                buttonBuy.right constrainTo parent.right
+                buttonBuy.width = spread
 
-            buttonsDivider.top constrainTo buttonBuy.bottom
-            buttonsDivider.left constrainTo parent.left
-            buttonsDivider.right constrainTo parent.right
+                buttonsDivider.top constrainTo buttonBuy.bottom
+                buttonsDivider.left constrainTo parent.left
+                buttonsDivider.right constrainTo parent.right
 
-            ratingCircle.top constrainTo buttonsDivider.bottom
-            ratingCircle.left constrainTo buttonsDivider.left
-            ratingCircle.right constrainTo familyCircle.left
+                ratingCircle.top constrainTo buttonsDivider.bottom
+                ratingCircle.left constrainTo buttonsDivider.left
+                ratingCircle.right constrainTo familyCircle.left
 
-            familyCircle.top constrainTo buttonsDivider.bottom
-            familyCircle.left constrainTo ratingCircle.right
-            familyCircle.right constrainTo tomatoesCircle.left
+                familyCircle.top constrainTo buttonsDivider.bottom
+                familyCircle.left constrainTo ratingCircle.right
+                familyCircle.right constrainTo tomatoesCircle.left
 
-            tomatoesCircle.top constrainTo buttonsDivider.bottom
-            tomatoesCircle.left constrainTo familyCircle.right
-            tomatoesCircle.right constrainTo similarCircle.left
+                tomatoesCircle.top constrainTo buttonsDivider.bottom
+                tomatoesCircle.left constrainTo familyCircle.right
+                tomatoesCircle.right constrainTo similarCircle.left
 
-            similarCircle.top constrainTo buttonsDivider.bottom
-            similarCircle.left constrainTo tomatoesCircle.right
-            similarCircle.right constrainTo buttonsDivider.right
-        }) {
-        CoilImage(
-            data = movie.headerImageUrl,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxWidth() + Modifier.preferredHeight(240.dp) + Modifier.tag("headerImage")
-        )
+                similarCircle.top constrainTo buttonsDivider.bottom
+                similarCircle.left constrainTo tomatoesCircle.right
+                similarCircle.right constrainTo buttonsDivider.right
 
-        CoilImage(
-            data = movie.portraitUrl,
-            modifier = Modifier.preferredSize(120.dp, 260.dp) +
-                    Modifier.padding(8.dp) +
-                    Modifier.tag("portraitImage")
-        )
+                buttonsBottomDivider.top constrainTo ratingCircle.bottom
+                buttonsBottomDivider.left constrainTo parent.left
+                buttonsBottomDivider.right constrainTo parent.right
 
-        Text(
-            movie.name,
-            style = MaterialTheme.typography.h4,
-            modifier = Modifier.padding(top = 16.dp) + Modifier.tag("title")
-        )
+                description.top constrainTo buttonsBottomDivider.bottom
+                description.left constrainTo parent.left
+                description.right constrainTo parent.right
+            }) {
+            CoilImage(
+                data = movie.headerImageUrl,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxWidth() + Modifier.preferredHeight(240.dp) + Modifier.tag(
+                    "headerImage"
+                )
+            )
 
-        Text(
-            movie.subtitle,
-            color = Color.Gray,
-            style = MaterialTheme.typography.subtitle1,
-            modifier = Modifier.padding(top = 8.dp) + Modifier.tag("subtitle")
-        )
+            CoilImage(
+                data = movie.portraitUrl,
+                modifier = Modifier.preferredSize(120.dp, 260.dp) +
+                        Modifier.padding(8.dp) +
+                        Modifier.tag("portraitImage")
+            )
 
-        Button(
-            onClick = {},
-            modifier = Modifier.padding(
-                start = 16.dp,
-                top = 16.dp,
-                end = 8.dp
-            ) + Modifier.tag("buttonRent")
-        ) {
-            Text(text = "RENT FROM $${movie.rentingPrice}")
+            Text(
+                movie.name,
+                style = MaterialTheme.typography.h4,
+                modifier = Modifier.padding(top = 16.dp) + Modifier.tag("title")
+            )
+
+            Text(
+                movie.subtitle,
+                color = Color.Gray,
+                style = MaterialTheme.typography.subtitle1,
+                modifier = Modifier.padding(top = 8.dp) + Modifier.tag("subtitle")
+            )
+
+            Button(
+                onClick = {},
+                modifier = Modifier.padding(
+                    start = 16.dp,
+                    top = 16.dp,
+                    end = 8.dp
+                ) + Modifier.tag("buttonRent")
+            ) {
+                Text(text = "RENT FROM $${movie.rentingPrice}")
+            }
+
+            Button(
+                onClick = {},
+                modifier = Modifier.padding(
+                    start = 8.dp,
+                    top = 16.dp,
+                    end = 16.dp
+                ) + Modifier.tag("buttonBuy")
+            ) {
+                Text(text = "BUY FROM $${movie.buyingPrice}")
+            }
+
+            Divider(
+                color = Color.LightGray,
+                modifier = Modifier.padding(
+                    top = 32.dp,
+                    start = 16.dp,
+                    end = 16.dp,
+                    bottom = 16.dp
+                ) + Modifier.tag("buttonsDivider")
+            )
+
+            RoundedTextButton(
+                tag = "ratingCircle",
+                text = movie.averageRating.toString(),
+                subtext = "${movie.totalRatings} ratings"
+            )
+
+            RoundedIconButton(
+                tag = "familyCircle",
+                asset = vectorResource(R.drawable.ic_family),
+                text = "Family"
+            )
+
+            RoundedIconButton(
+                tag = "tomatoesCircle",
+                asset = imageResource(R.drawable.tomato),
+                text = "${movie.rottenTomatoesRating}%",
+                background = Color(0xFFFFFAC2)
+            )
+
+            RoundedIconButton(
+                tag = "similarCircle",
+                asset = vectorResource(R.drawable.ic_similar),
+                text = "Similar"
+            )
+
+            Divider(
+                color = Color.LightGray,
+                modifier = Modifier.padding(
+                    top = 16.dp,
+                    start = 16.dp,
+                    end = 16.dp
+                ) + Modifier.tag("buttonsBottomDivider")
+            )
+
+            Text(
+                movie.description,
+                style = MaterialTheme.typography.body1,
+                modifier = Modifier.padding(all = 16.dp) + Modifier.tag("description")
+            )
         }
-
-        Button(
-            onClick = {},
-            modifier = Modifier.padding(
-                start = 8.dp,
-                top = 16.dp,
-                end = 16.dp
-            ) + Modifier.tag("buttonBuy")
-        ) {
-            Text(text = "BUY FROM $${movie.buyingPrice}")
-        }
-
-        Divider(
-            color = Color.LightGray,
-            modifier = Modifier.padding(
-                top = 32.dp,
-                start = 16.dp,
-                end = 16.dp,
-                bottom = 16.dp
-            ) + Modifier.tag("buttonsDivider")
-        )
-
-        RoundedTextButton(
-            tag = "ratingCircle",
-            text = "1.2",
-            subtext = "242 ratings"
-        )
-
-        RoundedIconButton(
-            tag = "familyCircle",
-            asset = vectorResource(R.drawable.ic_family),
-            text = "Family"
-        )
-
-        RoundedIconButton(
-            tag = "tomatoesCircle",
-            asset = imageResource(R.drawable.tomato),
-            text = "71%",
-            background = Color(0xFFFFFAC2)
-        )
-
-        RoundedIconButton(
-            tag = "similarCircle",
-            asset = vectorResource(R.drawable.ic_similar),
-            text = "Similar"
-        )
     }
 }
 

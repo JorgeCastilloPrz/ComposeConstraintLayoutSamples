@@ -8,6 +8,7 @@ data class MovieViewState(
     val rentingPrice: Float,
     val buyingPrice: Float,
     val averageRating: Float,
+    val totalRatings: Int,
     val rottenTomatoesRating: Int,
     val description: String
 )
