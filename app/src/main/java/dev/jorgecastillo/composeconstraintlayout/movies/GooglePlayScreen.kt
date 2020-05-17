@@ -7,15 +7,26 @@ import androidx.ui.core.tag
 import androidx.ui.foundation.Text
 import androidx.ui.foundation.drawBackground
 import androidx.ui.graphics.Color
-import androidx.ui.layout.*
+import androidx.ui.layout.ConstraintLayout
+import androidx.ui.layout.ConstraintSet
+import androidx.ui.layout.fillMaxHeight
+import androidx.ui.layout.fillMaxWidth
+import androidx.ui.layout.padding
+import androidx.ui.layout.preferredHeight
+import androidx.ui.layout.preferredSize
 import androidx.ui.material.Button
 import androidx.ui.material.Divider
 import androidx.ui.material.MaterialTheme
+import androidx.ui.res.imageResource
+import androidx.ui.res.vectorResource
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import dev.chrisbanes.accompanist.coil.CoilImage
+import dev.jorgecastillo.composeconstraintlayout.R
 import dev.jorgecastillo.composeconstraintlayout.domain.aMovie
 import dev.jorgecastillo.composeconstraintlayout.theme.lightThemeColors
+import dev.jorgecastillo.composeconstraintlayout.ui.RoundedIconButton
+import dev.jorgecastillo.composeconstraintlayout.ui.RoundedTextButton
 
 @Composable
 fun GooglePlayScreen(movie: MovieViewState) {
@@ -31,6 +42,10 @@ fun GooglePlayScreen(movie: MovieViewState) {
             val buttonRent = tag("buttonRent")
             val buttonBuy = tag("buttonBuy")
             val buttonsDivider = tag("buttonsDivider")
+            val ratingCircle = tag("ratingCircle")
+            val familyCircle = tag("familyCircle")
+            val tomatoesCircle = tag("tomatoesCircle")
+            val similarCircle = tag("similarCircle")
 
             headerImage.top constrainTo parent.top
             headerImage.left constrainTo parent.left
@@ -64,14 +79,21 @@ fun GooglePlayScreen(movie: MovieViewState) {
             buttonsDivider.left constrainTo parent.left
             buttonsDivider.right constrainTo parent.right
 
-//            text2.top constrainTo divider.top
-//            text2.bottom constrainTo divider.bottom
-//            text2.verticalBias = 0.2f
-//
-//            text1.width = wrap
-//            text1.height = wrapFixed
-//            divider.width = valueFixed(1.dp)
-//            divider.height = spread
+            ratingCircle.top constrainTo buttonsDivider.bottom
+            ratingCircle.left constrainTo buttonsDivider.left
+            ratingCircle.right constrainTo familyCircle.left
+
+            familyCircle.top constrainTo buttonsDivider.bottom
+            familyCircle.left constrainTo ratingCircle.right
+            familyCircle.right constrainTo tomatoesCircle.left
+
+            tomatoesCircle.top constrainTo buttonsDivider.bottom
+            tomatoesCircle.left constrainTo familyCircle.right
+            tomatoesCircle.right constrainTo similarCircle.left
+
+            similarCircle.top constrainTo buttonsDivider.bottom
+            similarCircle.left constrainTo tomatoesCircle.right
+            similarCircle.right constrainTo buttonsDivider.right
         }) {
         CoilImage(
             data = movie.headerImageUrl,
@@ -127,8 +149,33 @@ fun GooglePlayScreen(movie: MovieViewState) {
                 top = 32.dp,
                 start = 16.dp,
                 end = 16.dp,
-                bottom = 32.dp
+                bottom = 16.dp
             ) + Modifier.tag("buttonsDivider")
+        )
+
+        RoundedTextButton(
+            tag = "ratingCircle",
+            text = "1.2",
+            subtext = "242 ratings"
+        )
+
+        RoundedIconButton(
+            tag = "familyCircle",
+            asset = vectorResource(R.drawable.ic_family),
+            text = "Family"
+        )
+
+        RoundedIconButton(
+            tag = "tomatoesCircle",
+            asset = imageResource(R.drawable.tomato),
+            text = "71%",
+            background = Color(0xFFFFFAC2)
+        )
+
+        RoundedIconButton(
+            tag = "similarCircle",
+            asset = vectorResource(R.drawable.ic_similar),
+            text = "Similar"
         )
     }
 }
