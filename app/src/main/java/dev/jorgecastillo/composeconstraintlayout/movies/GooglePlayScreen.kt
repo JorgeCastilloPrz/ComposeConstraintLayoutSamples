@@ -29,191 +29,226 @@ import dev.jorgecastillo.composeconstraintlayout.theme.lightThemeColors
 import dev.jorgecastillo.composeconstraintlayout.ui.RoundedIconButton
 import dev.jorgecastillo.composeconstraintlayout.ui.RoundedTextButton
 
+sealed class Tag
+private object HeaderImageTag : Tag()
+private object PortraitImageTag : Tag()
+private object TitleTag : Tag()
+private object SubtitleTag : Tag()
+private object ButtonRentTag : Tag()
+private object ButtonBuyTag : Tag()
+private object ButtonsDividerTag : Tag()
+private object RatingCircleTag : Tag()
+private object FamilyCircleTag : Tag()
+private object TomatoesCircleTag : Tag()
+private object SimilarCircleTag : Tag()
+private object ButtonsBottomDividerTag : Tag()
+private object DescriptionTag : Tag()
+
 @Composable
 fun GooglePlayScreen(movie: MovieViewState) {
-    VerticalScroller {
-        ConstraintLayout(
-            modifier = Modifier.drawBackground(color = Color.White) +
-                    Modifier.fillMaxWidth() +
-                    Modifier.fillMaxHeight(),
-            constraintSet = ConstraintSet {
-                val headerImage = tag("headerImage")
-                val portraitImage = tag("portraitImage")
-                val title = tag("title")
-                val subtitle = tag("subtitle")
-                val buttonRent = tag("buttonRent")
-                val buttonBuy = tag("buttonBuy")
-                val buttonsDivider = tag("buttonsDivider")
-                val ratingCircle = tag("ratingCircle")
-                val familyCircle = tag("familyCircle")
-                val tomatoesCircle = tag("tomatoesCircle")
-                val similarCircle = tag("similarCircle")
-                val buttonsBottomDivider = tag("buttonsBottomDivider")
-                val description = tag("description")
-
-                headerImage.top constrainTo parent.top
-                headerImage.left constrainTo parent.left
-                headerImage.right constrainTo parent.right
-
-                portraitImage.left constrainTo parent.left
-                portraitImage.top constrainTo headerImage.bottom
-                portraitImage.bottom constrainTo headerImage.bottom
-
-                title.top constrainTo headerImage.bottom
-                title.left constrainTo portraitImage.right
-                title.right constrainTo parent.right
-                title.width = spread
-
-                subtitle.top constrainTo title.bottom
-                subtitle.left constrainTo title.left
-                subtitle.right constrainTo parent.right
-                subtitle.width = spread
-
-                buttonRent.left constrainTo parent.left
-                buttonRent.top constrainTo subtitle.bottom
-                buttonRent.right constrainTo buttonBuy.left
-                buttonRent.width = spread
-
-                buttonBuy.left constrainTo buttonRent.right
-                buttonBuy.top constrainTo subtitle.bottom
-                buttonBuy.right constrainTo parent.right
-                buttonBuy.width = spread
-
-                buttonsDivider.top constrainTo buttonBuy.bottom
-                buttonsDivider.left constrainTo parent.left
-                buttonsDivider.right constrainTo parent.right
-
-                ratingCircle.top constrainTo buttonsDivider.bottom
-                ratingCircle.left constrainTo buttonsDivider.left
-                ratingCircle.right constrainTo familyCircle.left
-
-                familyCircle.top constrainTo buttonsDivider.bottom
-                familyCircle.left constrainTo ratingCircle.right
-                familyCircle.right constrainTo tomatoesCircle.left
-
-                tomatoesCircle.top constrainTo buttonsDivider.bottom
-                tomatoesCircle.left constrainTo familyCircle.right
-                tomatoesCircle.right constrainTo similarCircle.left
-
-                similarCircle.top constrainTo buttonsDivider.bottom
-                similarCircle.left constrainTo tomatoesCircle.right
-                similarCircle.right constrainTo buttonsDivider.right
-
-                buttonsBottomDivider.top constrainTo ratingCircle.bottom
-                buttonsBottomDivider.left constrainTo parent.left
-                buttonsBottomDivider.right constrainTo parent.right
-
-                description.top constrainTo buttonsBottomDivider.bottom
-                description.left constrainTo parent.left
-                description.right constrainTo parent.right
-            }) {
-            CoilImage(
-                data = movie.headerImageUrl,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxWidth() + Modifier.preferredHeight(240.dp) + Modifier.tag(
-                    "headerImage"
-                )
-            )
-
-            CoilImage(
-                data = movie.portraitUrl,
-                modifier = Modifier.preferredSize(120.dp, 260.dp) +
-                        Modifier.padding(8.dp) +
-                        Modifier.tag("portraitImage")
-            )
-
-            Text(
-                movie.name,
-                style = MaterialTheme.typography.h4,
-                modifier = Modifier.padding(top = 16.dp) + Modifier.tag("title")
-            )
-
-            Text(
-                movie.subtitle,
-                color = Color.Gray,
-                style = MaterialTheme.typography.subtitle1,
-                modifier = Modifier.padding(top = 8.dp) + Modifier.tag("subtitle")
-            )
-
-            Button(
-                onClick = {},
-                modifier = Modifier.padding(
-                    start = 16.dp,
-                    top = 16.dp,
-                    end = 8.dp
-                ) + Modifier.tag("buttonRent")
-            ) {
-                Text(text = "RENT FROM $${movie.rentingPrice}")
-            }
-
-            Button(
-                onClick = {},
-                modifier = Modifier.padding(
-                    start = 8.dp,
-                    top = 16.dp,
-                    end = 16.dp
-                ) + Modifier.tag("buttonBuy")
-            ) {
-                Text(text = "BUY FROM $${movie.buyingPrice}")
-            }
-
-            Divider(
-                color = Color.LightGray,
-                modifier = Modifier.padding(
-                    top = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp,
-                    bottom = 16.dp
-                ) + Modifier.tag("buttonsDivider")
-            )
-
-            RoundedTextButton(
-                tag = "ratingCircle",
-                text = movie.averageRating.toString(),
-                subtext = "${movie.totalRatings} ratings"
-            )
-
-            RoundedIconButton(
-                tag = "familyCircle",
-                asset = vectorResource(R.drawable.ic_family),
-                text = "Family"
-            )
-
-            RoundedIconButton(
-                tag = "tomatoesCircle",
-                asset = imageResource(R.drawable.tomato),
-                text = "${movie.rottenTomatoesRating}%",
-                background = Color(0xFFFFFAC2)
-            )
-
-            RoundedIconButton(
-                tag = "similarCircle",
-                asset = vectorResource(R.drawable.ic_similar),
-                text = "Similar"
-            )
-
-            Divider(
-                color = Color.LightGray,
-                modifier = Modifier.padding(
-                    top = 16.dp,
-                    start = 16.dp,
-                    end = 16.dp
-                ) + Modifier.tag("buttonsBottomDivider")
-            )
-
-            Text(
-                movie.description,
-                style = MaterialTheme.typography.body1,
-                modifier = Modifier.padding(all = 16.dp) + Modifier.tag("description")
-            )
+  VerticalScroller {
+    ConstraintLayout(
+      modifier = Modifier.drawBackground(color = Color.White) +
+        Modifier.fillMaxWidth() +
+        Modifier.fillMaxHeight(),
+      constraintSet = ConstraintSet {
+        val headerImage = tag(HeaderImageTag).apply {
+          top constrainTo parent.top
+          left constrainTo parent.left
+          right constrainTo parent.right
         }
+
+        val portraitImage = tag(PortraitImageTag).apply {
+          left constrainTo parent.left
+          top constrainTo headerImage.bottom
+          bottom constrainTo headerImage.bottom
+        }
+
+        val title = tag(TitleTag).apply {
+          top constrainTo headerImage.bottom
+          left constrainTo portraitImage.right
+          right constrainTo parent.right
+          width = spread
+        }
+
+        val subtitle = tag(SubtitleTag).apply {
+          top constrainTo title.bottom
+          left constrainTo title.left
+          right constrainTo parent.right
+          width = spread
+        }
+
+        val buttonRent = tag(ButtonRentTag)
+        val buttonBuy = tag(ButtonBuyTag)
+
+        buttonBuy.apply {
+          left constrainTo buttonRent.right
+          top constrainTo subtitle.bottom
+          right constrainTo parent.right
+          width = spread
+        }
+
+        buttonRent.apply {
+          left constrainTo parent.left
+          top constrainTo subtitle.bottom
+          right constrainTo buttonBuy.left
+          width = spread
+        }
+
+        val buttonsDivider = tag(ButtonsDividerTag).apply {
+          top constrainTo buttonBuy.bottom
+          left constrainTo parent.left
+          right constrainTo parent.right
+        }
+
+        val ratingCircle = tag(RatingCircleTag)
+        val familyCircle = tag(FamilyCircleTag)
+        val tomatoesCircle = tag(TomatoesCircleTag)
+        val similarCircle = tag(SimilarCircleTag)
+
+        ratingCircle.apply {
+          top constrainTo buttonsDivider.bottom
+          left constrainTo buttonsDivider.left
+          right constrainTo familyCircle.left
+        }
+
+        familyCircle.apply {
+          top constrainTo buttonsDivider.bottom
+          left constrainTo ratingCircle.right
+          right constrainTo tomatoesCircle.left
+        }
+
+        tomatoesCircle.apply {
+          top constrainTo buttonsDivider.bottom
+          left constrainTo familyCircle.right
+          right constrainTo similarCircle.left
+        }
+
+        similarCircle.apply {
+          top constrainTo buttonsDivider.bottom
+          left constrainTo tomatoesCircle.right
+          right constrainTo buttonsDivider.right
+        }
+
+        val buttonsBottomDivider = tag(ButtonsBottomDividerTag).apply {
+          top constrainTo ratingCircle.bottom
+          left constrainTo parent.left
+          right constrainTo parent.right
+        }
+
+        tag(DescriptionTag).apply {
+          top constrainTo buttonsBottomDivider.bottom
+          left constrainTo parent.left
+          right constrainTo parent.right
+        }
+      }) {
+      CoilImage(
+        data = movie.headerImageUrl,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier.fillMaxWidth() +
+          Modifier.preferredHeight(240.dp) +
+          Modifier.tag(HeaderImageTag)
+      )
+
+      CoilImage(
+        data = movie.portraitUrl,
+        modifier = Modifier.preferredSize(120.dp, 260.dp) +
+          Modifier.padding(8.dp) +
+          Modifier.tag(PortraitImageTag)
+      )
+
+      Text(
+        movie.name,
+        style = MaterialTheme.typography.h4,
+        modifier = Modifier.padding(top = 16.dp) + Modifier.tag(TitleTag)
+      )
+
+      Text(
+        movie.subtitle,
+        color = Color.Gray,
+        style = MaterialTheme.typography.subtitle1,
+        modifier = Modifier.padding(top = 8.dp) + Modifier.tag(SubtitleTag)
+      )
+
+      Button(
+        onClick = {},
+        modifier = Modifier.padding(
+          start = 16.dp,
+          top = 16.dp,
+          end = 8.dp
+        ) + Modifier.tag(ButtonRentTag)
+      ) {
+        Text(text = "RENT FROM $${movie.rentingPrice}")
+      }
+
+      Button(
+        onClick = {},
+        modifier = Modifier.padding(
+          start = 8.dp,
+          top = 16.dp,
+          end = 16.dp
+        ) + Modifier.tag(ButtonBuyTag)
+      ) {
+        Text(text = "BUY FROM $${movie.buyingPrice}")
+      }
+
+      Divider(
+        color = Color.LightGray,
+        modifier = Modifier.padding(
+          top = 32.dp,
+          start = 16.dp,
+          end = 16.dp,
+          bottom = 16.dp
+        ) + Modifier.tag(ButtonsDividerTag)
+      )
+
+      RoundedTextButton(
+        tag = RatingCircleTag,
+        text = movie.averageRating.toString(),
+        subtext = "${movie.totalRatings} ratings"
+      )
+
+      RoundedIconButton(
+        tag = FamilyCircleTag,
+        asset = vectorResource(R.drawable.ic_family),
+        text = "Family"
+      )
+
+      RoundedIconButton(
+        tag = TomatoesCircleTag,
+        asset = imageResource(R.drawable.tomato),
+        text = "${movie.rottenTomatoesRating}%",
+        background = Color(0xFFFFFAC2)
+      )
+
+      RoundedIconButton(
+        tag = SimilarCircleTag,
+        asset = vectorResource(R.drawable.ic_similar),
+        text = "Similar"
+      )
+
+      Divider(
+        color = Color.LightGray,
+        modifier = Modifier.padding(
+          top = 16.dp,
+          start = 16.dp,
+          end = 16.dp
+        ) + Modifier.tag(ButtonsBottomDividerTag)
+      )
+
+      Text(
+        movie.description,
+        style = MaterialTheme.typography.body1,
+        modifier = Modifier.padding(all = 16.dp) + Modifier.tag(DescriptionTag)
+      )
     }
+  }
 }
 
 @Preview
 @Composable
 fun DefaultPreview() {
-    MaterialTheme(colors = lightThemeColors) {
-        GooglePlayScreen(aMovie())
-    }
+  MaterialTheme(colors = lightThemeColors) {
+    GooglePlayScreen(aMovie())
+  }
 }

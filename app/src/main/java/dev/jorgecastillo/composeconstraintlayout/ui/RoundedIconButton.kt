@@ -17,11 +17,12 @@ import androidx.ui.layout.size
 import androidx.ui.material.MaterialTheme
 import androidx.ui.unit.dp
 import androidx.ui.unit.sp
+import dev.jorgecastillo.composeconstraintlayout.movies.Tag
 import dev.jorgecastillo.composeconstraintlayout.theme.lightThemeColors
 
 @Composable
 fun RoundedIconButton(
-    tag: String,
+    tag: Tag,
     asset: ImageAsset,
     text: String,
     background: Color = lightThemeColors.primary
@@ -48,7 +49,7 @@ fun RoundedIconButton(
 
 @Composable
 fun RoundedIconButton(
-    tag: String,
+    tag: Tag,
     asset: VectorAsset,
     text: String,
     background: Color = lightThemeColors.primary
@@ -74,7 +75,7 @@ fun RoundedIconButton(
 }
 
 @Composable
-fun RoundedTextButton(tag: String, text: String, subtext: String) {
+fun RoundedTextButton(tag: Tag, text: String, subtext: String) {
     Column(
         modifier = Modifier.tag(tag) + Modifier.padding(16.dp),
         horizontalGravity = Alignment.CenterHorizontally
